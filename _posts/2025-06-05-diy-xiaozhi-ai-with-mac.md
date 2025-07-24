@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 测试
+title: 测 试
 categories: [DIY]
 description: 使用 Mac 烧录小智 AI
 keywords: DIY, 小智AI, 烧录, Mac, MacBook, ESP32
