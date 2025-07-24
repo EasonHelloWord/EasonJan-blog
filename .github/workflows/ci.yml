@@ -25,8 +25,8 @@ jobs:
 
       - name: Install and Build
         run: |
-          gem install bundler -v "~>2.2"  # 锁定Bundler版本
-          bundle _2.2.33_ install  # 使用特定版本
+          gem install bundler
+          bundle install
           bundle exec jekyll build
         env:
           JEKYLL_ENV: production
