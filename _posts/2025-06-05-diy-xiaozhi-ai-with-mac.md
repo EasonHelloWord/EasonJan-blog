@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DIY｜Mac 搭建 ESP-IDF 开发环境及编译小智 AI
+title: 测试
 categories: [DIY]
 description: 使用 Mac 烧录小智 AI
 keywords: DIY, 小智AI, 烧录, Mac, MacBook, ESP32
