@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://www.easonjan.top/pages/EasonHelloWord/EasonJan-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.easonjan.top/pages/EasonHelloWord/EasonJan-blog/" rel="alternate" type="text/html" /><updated>2025-07-24T13:49:17+08:00</updated><id>https://www.easonjan.top/pages/EasonHelloWord/EasonJan-blog/feed.xml</id><title type="html">EasonJan</title><subtitle>EasonJan的创业日记</subtitle><author><name>Eason Jan</name></author><entry><title type="html">DIY｜Mac 搭建 ESP-IDF 开发环境及编译小智 AI</title><link href="https://www.easonjan.top/pages/EasonHelloWord/EasonJan-blog/2025/06/05/diy-xiaozhi-ai-with-mac/" rel="alternate" type="text/html" title="DIY｜Mac 搭建 ESP-IDF 开发环境及编译小智 AI" /><published>2025-06-05T00:00:00+08:00</published><updated>2025-06-05T00:00:00+08:00</updated><id>https://www.easonjan.top/pages/EasonHelloWord/EasonJan-blog/2025/06/05/diy-xiaozhi-ai-with-mac</id><content type="html" xml:base="https://www.easonjan.top/pages/EasonHelloWord/EasonJan-blog/2025/06/05/diy-xiaozhi-ai-with-mac/"><![CDATA[<p>前一阵子在百度 AI 开发者大会上，看到基于小智 AI DIY 玩具的演示，感觉有点意思，想着自己也来试试。</p>
+
+<p>如果只是想烧录现成的固件，乐鑫官方除了提供了 Windows 版本的 <a href="https://www.espressif.com.cn/zh-hans/support/download/other-tools">Flash 下载工具</a> 之外，还提供了基于网页版的 <a href="https://espressif.github.io/esp-launchpad/">ESP LAUNCHPAD</a>，按照说明在 Mac 上也可以使用。</p>
+
+<p>而我想着后期做一些定制，所以还是需要在 Mac 上搭建 ESP-IDF 开发环境，自己编译和烧录固件。而这个在 <a href="https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb">小智 AI 聊天机器人百科全书</a> 中没有详细提及，所以我就记录一下搭建过程，供有需要的朋友参考。</p>
+
+<p>先上一个跑起来后的效果：</p>
+
+<p><img src="/images/posts/ai/xiaozhi-ai.jpg" alt="" /></p>
+
+<h2 id="配置-macos-平台工具链">配置 macOS 平台工具链</h2>
+
+<p>这一步参考乐鑫官方的 <a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4.1/esp32s3/get-started/linux-macos-setup.html">Linux 和 macOS 平台工具链的标准设置</a> 完成，我这里指定了使用 ESP-IDF v5.4.1 版本，编译目标是 ESP32-S3。</p>
+
+<h3 id="第一步安装前置依赖">第一步：安装前置依赖</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>cmake ninja dfu-util ccache python3
+</code></pre></div></div>
+
+<h3 id="第二步获取-esp-idf">第二步：获取 ESP-IDF</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> ~/github
+<span class="nb">cd</span> ~/github
+git clone <span class="nt">-b</span> v5.4.1 <span class="nt">--recursive</span> https://github.com/espressif/esp-idf.git
+</code></pre></div></div>
+
+<p>ESP-IDF 将下载至 <code class="language-plaintext highlighter-rouge">~/github/esp-idf</code> 目录。</p>
+
+<h3 id="第三步设置工具">第三步：设置工具</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/github/esp-idf
+./install.sh esp32s3
+</code></pre></div></div>
+
+<h3 id="第四步设置环境变量">第四步：设置环境变量</h3>
+
+<p>在 ~/.zshrc 中添加以下内容：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">get_idf</span><span class="o">=</span><span class="s1">'. $HOME/github/esp-idf/export.sh'</span>
+</code></pre></div></div>
+
+<p>然后 <code class="language-plaintext highlighter-rouge">source ~/.zshrc</code> 使其生效。</p>
+
+<p>这样在需要用到 ESP-IDF 环境的时候，只需要在终端中执行 <code class="language-plaintext highlighter-rouge">get_idf</code> 即可。</p>
+
+<p>在执行以上步骤时，如果遇到问题，可以到 <a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4.1/esp32s3/get-started/linux-macos-setup.html">乐鑫官方文档</a> 里看看有没有解决方案。</p>
+
+<h2 id="下载和编译小智-ai-固件">下载和编译小智 AI 固件</h2>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/github
+git clone <span class="nt">-b</span> v1.6.2 git@github.com:78/xiaozhi-esp32.git
+<span class="nb">cd </span>xiaozhi-esp32
+</code></pre></div></div>
+
+<p>然后接入 ESP32-S3 开发板，执行以下命令：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get_idf
+idf.py set-target esp32s3
+idf.py build
+idf.py flash monitor
+</code></pre></div></div>
+
+<p>一切顺利的话，会向 ESP32-S3 开发板烧录小智 AI 固件，并且进入监控模式。</p>
+
+<p>至此，就初步能跑起来了。按照提示进行 WiFi 配置和小智 AI 平台的设备绑定，即可开始使用。</p>
+
+<p>如果后续需要定制固件，可以基于 <code class="language-plaintext highlighter-rouge">~/github/xiaozhi-esp32</code> 目录进行修改和编译。若习惯使用 VSCode 进行开发，可以安装 <a href="https://github.com/espressif/vscode-esp-idf-extension">适用于 VSCode 的 ESP-IDF 扩展</a>，这样可以更方便地进行开发和调试。</p>
+
+<h2 id="参考链接">参考链接</h2>
+
+<ul>
+  <li><a href="https://www.espressif.com.cn/zh-hans/support/download/other-tools">https://www.espressif.com.cn/zh-hans/support/download/other-tools</a></li>
+  <li><a href="https://espressif.github.io/esp-launchpad/">https://espressif.github.io/esp-launchpad/</a></li>
+  <li><a href="https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb">https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb</a></li>
+  <li><a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4.1/esp32s3/get-started/linux-macos-setup.html">https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4.1/esp32s3/get-started/linux-macos-setup.html</a></li>
+  <li><a href="https://github.com/espressif/vscode-esp-idf-extension">https://github.com/espressif/vscode-esp-idf-extension</a></li>
+</ul>]]></content><author><name>Eason Jan</name></author><category term="DIY" /><summary type="html"><![CDATA[使用 Mac 烧录小智 AI]]></summary></entry></feed>
