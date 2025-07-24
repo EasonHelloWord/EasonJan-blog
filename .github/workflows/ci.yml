@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy to Server
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-deploy:
+  build-and-Deploy-to-Server:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,13 +37,25 @@ jobs:
           ls -la _site
           [ -f _site/index.html ] || exit 1
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.5.0  # 更新到稳定版
+      - name: Create .nojekyll file
+        run: touch _site/.nojekyll
+
+      - name: Validate build output
+        run: |
+          [ -d "_site" ] || (echo "Build directory missing"; exit 1)
+          [ -f "_site/index.html" ] || (echo "Index file missing"; exit 1)
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.8.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # 使用自动生成的token
-          branch: built  # 目标分支
-          folder: _site  # 构建目录
-          clean: true
-          clean-exclude: |
-            CNAME
-            .nojekyll
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.SERVER_PORT || 22 }} ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server via rsync
+        run: |
+          rsync -avz --delete -e "ssh -p ${{ secrets.SERVER_PORT || 22 }}" \
+          _site/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.SERVER_DEPLOY_PATH }}
