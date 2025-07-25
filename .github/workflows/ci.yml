@@ -30,6 +30,7 @@ jobs:
           bundle exec jekyll build
         env:
           JEKYLL_ENV: production
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 添加构建验证步骤
       - name: Verify Build Output

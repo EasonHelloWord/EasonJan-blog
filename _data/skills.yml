@@ -1,18 +1,17 @@
-- name: Software Engineer Keywords
+- name: 正在建设中
   keywords:
-      - Java
-      - C++
-      - Python
+      - 会是什么呢
+      - 尽情期待
 
-- name: Mobile Developer Keywords
-  keywords:
-      - Android
-      - Reverse Engineering
+# - name: Mobile Developer Keywords
+#   keywords:
+#       - Android
+#       - Reverse Engineering
 
-- name: Windows Developer Keywords
-  keywords:
-      - Win32 SDK
-      - DuiLib
-      - WTL
-      - COM
-      - WinDbg
+# - name: Windows Developer Keywords
+#   keywords:
+#       - Win32 SDK
+#       - DuiLib
+#       - WTL
+#       - COM
+#       - WinDbg
