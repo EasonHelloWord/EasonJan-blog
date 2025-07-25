@@ -38,6 +38,8 @@ mindmap2: false
     
     一年的时间做准备，对我来说可能很短，但对社会来说可能是翻天覆地的变化，我认为行动是很关键的，能力也可以在实战中练习。
 
+![计划](https://media.easonjan.top/blog/post/first-day-to-start-a-business/目标.jpg)
+
 跑起来，风自然会来。
 
 [1]: https://mazhuang.org/
