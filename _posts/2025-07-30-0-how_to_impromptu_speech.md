@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 创业笔记之即兴演讲
-categories: [创业笔记]
+categories: [创业笔记, 湖畔学堂]
 description: 关于即兴演讲讲座的一些记录，以供回忆
 keywords: 即兴演讲, 创业笔记, 第六天
 mermaid: false
