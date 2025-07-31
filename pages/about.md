@@ -10,24 +10,20 @@ permalink: /about/
 
 我是蒋羿淳。
 
-不怕犯错，努力改变人生。
+不怕犯错，努力创造人生。
 
-## 联系
+## 社交平台
 
 <ul>
 {% for website in site.data.social %}
-<li>{{website.sitename }}：<a href="{{ website.url }}" target="_blank">@{{ website.name }}</a></li>
+<li>{{ website.sitename }}：<a href="{{ website.url }}" target="_blank">@{{ website.name }}</a></li>
 {% endfor %}
-{% if site.url contains 'mazhuang.org' %}
-<li>
-微信公众号：<br />
-<img style="height:192px;width:192px;border:1px solid lightgrey;" src="{{ site.url }}/assets/images/qrcode.jpg" alt="闷骚的程序员" />
 </li>
 {% endif %}
 </ul>
 
 
-## Skill Keywords
+## 技能清单
 
 {% for skill in site.data.skills %}
 ### {{ skill.name }}
