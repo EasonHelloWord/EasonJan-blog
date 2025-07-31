@@ -1,6 +1,14 @@
-- name: developing
+- name: 艺术
   keywords:
-      - Please look forward to it
+      - Adobe Premiere
+      - Adobe Photoshop
+      - Adobe Audition
+      - Adobe Illustrator
+      - Blender
+
+- name: 开发
+  keywords:
+      - Python
 
 # - name: Mobile Developer Keywords
 #   keywords:
