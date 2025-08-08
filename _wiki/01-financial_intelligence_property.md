@@ -3,7 +3,7 @@ layout: wiki
 title: 清点资产
 cate1: 湖畔学堂
 cate2: 财商
-description: 请点资产
+description: 清点资产
 keywords: 财商
 mermaid: false
 sequence: false
